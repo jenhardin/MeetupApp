@@ -1,0 +1,80 @@
+{% extends "MeetupApp_base.html" %}
+
+
+{% block content %}
+{% include "sidePanel.html" %}
+<div class="container">
+    <h1 class='text-center pt-5'><a href="/MeetupApp/" style="text-decoration: none;"><strong>Portland Meetups</strong></a></h1>
+    <br />
+    <div class="main_form">
+        <form method="GET" action="" name="form">
+            <div class="meetup_mainform">
+                {% csrf_token %}
+                <!-- <label for="group_id">Select a Meetup Group</label> -->
+                <select id="group_id" name="group" class="btn btn-secondary dropdown-toggle">
+                    <option selected="selected" disabled>
+                        Select Group
+                    </option>
+                    {% for name in MeetupGroupNameList %}
+
+                    <option value="{{ name }}">{{ name }}</option>
+
+                    {% endfor %}
+                    
+                    <div class="fromBtn_container">
+                        <input type="button" class="btn btn-light" id="goBtn" value="Submit" 
+                        onsubmit="top.location.href=this.options[this.selectedIndex].value;">
+                    </div>
+
+
+                    <div class="card meetup_eventInfo">
+                            <div class="card-header">
+                                    {% for info in eventInfoUpdate %}
+                                    <h3><strong>{{ info.eventGroupName }}</strong></h3>
+                            </div>
+                            <div class="card-body">
+                                <blockquote class="blockquote mb-0">
+
+
+                                    <h4 id="meetup_eventName"><strong>{{ info.eventName }}</strong></h4>
+                                    <p id="meetup_eventDateTime">{{ info.eventDate }}  @  {{ info.eventTime }}</p>
+                                    <p>{{ info.eventAddress }}</p>
+                                    <a href="{{ info.eventLink }}" target="_blank">{{ info.eventLink }}</a>
+                                    <br>
+                                    <br>
+                                    <p>----------------------------------------</p>
+                                    <br>
+
+                                {% endfor %}
+                                </blockquote>
+                            </div>
+                        </div>
+
+
+
+
+                        
+                        
+                        
+                        
+                    
+                        
+
+                
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock content %}
+
+<script type="text/javascript">
+    var goBtn = document.getElementById("goBtn");
+    var menu = document.getElementById("group_id");
+
+    goBtn.onclick = function () {
+        window.location = group_id.value;
+    }
+</script>
